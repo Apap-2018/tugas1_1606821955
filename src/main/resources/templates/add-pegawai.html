@@ -24,16 +24,16 @@
 				<div class="card-body">
 					<form th:action="@{/pegawai/tambah}" th:object="${pegawai}" method="POST">
 						Nama: <br>
-						<input type="text" name="nama" class="form-control" />
+						<input type="text" th:field="*{nama}" class="form-control" />
 						<br>
 						Tempat Lahir: <br>
-						<input type="text" name="tempatLahir" class="form-control" />
+						<input type="text" th:field="*{tempatLahir}" class="form-control" />
 						<br>
 						Tanggal Lahir: <br>
-						<input type="date" name="tanggalLahir" class="form-control" />
+						<input type="date" th:field="*{tanggalLahir}" class="form-control" />
 						<br>
 						Tahun Masuk: <br>
-						<input type="number" name="tahunMasuk" class="form-control" />
+						<input type="number" th:field="*{tahunMasuk}" class="form-control" />
 						<br>
 						Provinsi: <br>
 						<div class="form-group blu-margin">
@@ -47,7 +47,7 @@
 						<br>
 						Nama Instansi: <br>
 						<div class="form-group blu-margin">
-							<select class="form-control" id="dropInstansi" name="instansi">
+							<select class="form-control" th:field="*{instansi}" id="dropInstansi">
 								<option value="">--Pilih Instansi--</option>
 								<option th:each="instansi : ${instansiAll}"
 										th:value="${instansi}"
@@ -56,18 +56,18 @@
 						</div>
 						<br>
 						Jabatan: <br>
-						<div class="form-group blu-margin">
-							<select class="form-control" id="dropJabatan" name="jabatan">
+						<div th:each="jabatanPegawai, iterationStatus : *{jabatanPegawai}" class="form-group blu-margin">
+							<select class="form-control" th:field="*{jabatanPegawai[__${iterationStatus.index}__].jabatan}" id="dropJabatan">
 								<option value="">--Pilih Jabatan--</option>
 								<option th:each="jabatan : ${jabatanAll}"
 										th:value="${jabatan}"
 										th:text="${jabatan.nama}"></option>
 							</select>
 						</div>
+						<button class="btn btn-primary" type="submit" name="addJabatanPegawai">Tambah Jabatan Lainnya</button>
 						<br><br>
 						<button type="submit" class="btn btn-primary">Simpan</button>
 					</form>
-					
 				</div>
 			</div>
 		</div>
