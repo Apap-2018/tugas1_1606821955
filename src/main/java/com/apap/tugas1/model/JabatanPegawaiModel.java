@@ -26,19 +26,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class JabatanPegawaiModel implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@NotNull
-	@Size(max = 20)
 	private long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@Size(max = 20)
 	@JoinColumn(name = "id_pegawai", referencedColumnName = "id", nullable = false)
 	@OnDelete(action = OnDeleteAction.NO_ACTION)
 	@JsonIgnore
 	private PegawaiModel pegawai;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@Size(max = 20)
 	@JoinColumn(name = "id_jabatan", referencedColumnName = "id", nullable = false)
 	@OnDelete(action = OnDeleteAction.NO_ACTION)
 	@JsonIgnore

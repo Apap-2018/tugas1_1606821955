@@ -95,7 +95,7 @@ public class PegawaiController {
 	
 	
 	@RequestMapping(value = "/pegawai/tambah", method = RequestMethod.POST)
-	public String addPegawaiSubmit(@ModelAttribute PegawaiModel pegawai) throws ParseException {
+	public String addPegawaiSubmit(@ModelAttribute PegawaiModel pegawai, Model model) throws ParseException {
 		List<JabatanPegawaiModel> jabatanPegawai = pegawai.getJabatanPegawai();
 		
 		for(JabatanPegawaiModel jabatanPeg : jabatanPegawai) {
@@ -108,6 +108,8 @@ public class PegawaiController {
 		
 		instansiService.getInstansiModelById(pegawai.getInstansi().getId()).getPegawai().add(pegawai);
 		
-		return "add";
+		model.addAttribute("pegawai", pegawai);
+		
+		return "add-pegawai-berhasil";
 	}
 }
