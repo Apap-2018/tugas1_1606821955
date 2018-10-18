@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Home Page</title>
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+
+	<div class="container-fluid">
+	<h2>Sistem Informasi Kepegawaian</h2>
+	<p>Selamat datang di Sistem Informasi Kepegawaian</p>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="card">
+				<div class="card-header">
+					Lihat Data Pegawai berdasarkan NIP
+				</div>
+				<form th:action="@{/pegawai}" method="GET">
+					<div class="card-body">
+						<p class="card-text">Masukan Nomor Induk Pegawai</p>
+						<input type="text" name="nip" class="form-control" />
+						<p></p>
+						<button type="submit" class="btn btn-primary">Lihat</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
