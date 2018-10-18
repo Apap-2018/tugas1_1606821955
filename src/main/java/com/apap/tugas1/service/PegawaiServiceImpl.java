@@ -41,4 +41,9 @@ public class PegawaiServiceImpl implements PegawaiService {
 		
 		return totalGaji;
 	}
+	
+	@Override
+	public void addPegawai(PegawaiModel pegawai) {
+		pegawaiDb.save(pegawai);
+	}
 }

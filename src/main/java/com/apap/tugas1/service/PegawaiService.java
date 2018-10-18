@@ -8,4 +8,5 @@ import com.apap.tugas1.model.PegawaiModel;
 public interface PegawaiService {
 	PegawaiModel getPegawaiModelByNip(String nip);
 	long hitungGajiPegawai(String nip);
+	void addPegawai(PegawaiModel pegawai);
 }
