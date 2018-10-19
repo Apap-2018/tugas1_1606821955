@@ -6,6 +6,12 @@
 	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 	<script th:src="@{/js/bootstrap.min.js}"></script>
 	
+	<link href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+	<link href = "https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+	<script src = "https://code.jquery.com/jquery-3.3.1.js"></script>
+	<script src = "https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script src = "https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+	
 	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
 	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
@@ -15,7 +21,7 @@
 
 	<div class="container-fluid">
 	<h2>Daftar Jabatan</h2>
-	<table class="table table-bordered table-striped">
+	<table id="table_id" class="table table-bordered table-striped">
 			<thead>
 				<tr>
 				<th>Nama</th>
@@ -35,4 +41,10 @@
 	</table>
 	</div>
 </body>
+
+<script>
+	$(document).ready( function () {
+	    $('#table_id').DataTable();
+	} );
+</script>
 </html>
