@@ -3,6 +3,8 @@ package com.apap.tugas1.service;
 import java.sql.Date;
 import java.text.ParseException;
 
+import java.util.List;
+
 import com.apap.tugas1.model.PegawaiModel;
 
 /**
@@ -18,4 +20,5 @@ public interface PegawaiService {
 	String generateNip(String id_instansi, Date tanggalLahir, String tahunMasuk) throws ParseException;
 	PegawaiModel getPegawaiTermuda(String id_instansi);
 	PegawaiModel getPegawaiTertua(String id_instansi);
+	List<PegawaiModel> getSelectedPegawai(long idInstansi, long idJabatan);
 }

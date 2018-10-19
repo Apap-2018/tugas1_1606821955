@@ -171,6 +171,39 @@ public class PegawaiController {
 		return "edit-pegawai-berhasil";
 	}
 	
+	@RequestMapping(value = "/pegawai/cari")
+	public String viewSelectedPegawai(Model model) {
+		List<ProvinsiModel> provinsi = provinsiService.getAllProvinsi();
+		List<InstansiModel> instansi = instansiService.getAllInstansi(); 
+		List<JabatanModel> jabatan = jabatanService.getAllJabatan();
+		List<PegawaiModel> pegawaiSelected = new ArrayList<>();
+		
+		model.addAttribute("provinsiAll", provinsi);
+		model.addAttribute("instansiAll", instansi);
+		model.addAttribute("jabatanAll", jabatan);
+		model.addAttribute("pegawaiSelected", pegawaiSelected);
+		return "viewselected-pegawai";
+	}
+	
+	@RequestMapping(value = "/pegawai/cari", method = RequestMethod.GET, params = {"cari"})
+	public String viewSelectedPegawaiView(/**@RequestParam("idProvinsi") String idProvinsi,*/
+										@RequestParam("idInstansi") String idInstansi,
+										@RequestParam("idJabatan") String idJabatan,
+										Model model) {
+		List<ProvinsiModel> provinsi = provinsiService.getAllProvinsi();
+		List<InstansiModel> instansi = instansiService.getAllInstansi(); 
+		List<JabatanModel> jabatan = jabatanService.getAllJabatan();
+		
+		List<PegawaiModel> pegawaiSelected = pegawaiService.getSelectedPegawai(Long.parseLong(idInstansi),
+											Long.parseLong(idJabatan));
+		
+		model.addAttribute("provinsiAll", provinsi);
+		model.addAttribute("instansiAll", instansi);
+		model.addAttribute("jabatanAll", jabatan);
+		model.addAttribute("pegawaiSelected", pegawaiSelected);
+		return "viewselected-pegawai";
+	}
+	
 	@RequestMapping(value = "/pegawai/termuda-tertua", method = RequestMethod.GET)
 	public String viewPegawaiTermudaTertua(@RequestParam("idInstansi") String id, Model model) {
 		PegawaiModel pegawaiTermuda = pegawaiService.getPegawaiTermuda(id);

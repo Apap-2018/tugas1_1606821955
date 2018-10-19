@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import com.apap.tugas1.model.PegawaiModel;
 import com.apap.tugas1.model.InstansiModel;
@@ -264,5 +265,22 @@ public class PegawaiServiceImpl implements PegawaiService {
 		}
 		
 		return pegawaiTertua;
+	}
+	
+	@Override
+	public List<PegawaiModel> getSelectedPegawai(long idInstansi, long idJabatan){
+		InstansiModel instansi = instansiDb.findById(idInstansi);
+		List<PegawaiModel> pegawaiList = new ArrayList<>();
+		
+		for (PegawaiModel pegawai : instansi.getPegawai()) {
+			for (JabatanPegawaiModel jabatanPegawai : pegawai.getJabatanPegawai()) {
+				if (jabatanPegawai.getJabatan().getId() == idJabatan) {
+					pegawaiList.add(pegawai);
+					continue;
+				}
+			}
+		}
+		
+		return pegawaiList;
 	}
 }
