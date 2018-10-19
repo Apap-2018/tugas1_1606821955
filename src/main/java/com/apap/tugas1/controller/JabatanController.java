@@ -59,4 +59,21 @@ public class JabatanController {
 		model.addAttribute("jabatan", jabatanChange);
 		return "edit-jabatan-berhasil";
 	}
+	
+	@RequestMapping(value = "/jabatan/hapus", method = RequestMethod.POST)
+	public String deleteJabatan(@ModelAttribute JabatanModel jabatan, Model model) {
+		JabatanModel jabatanToDelete = jabatanService.getJabatanModelById(jabatan.getId());
+		String nama = jabatanToDelete.getNama();
+		
+		boolean deleteSuccess = jabatanService.deleteJabatan(jabatanToDelete);
+		
+		if (deleteSuccess) {
+			model.addAttribute("status", "sukses");
+		} else {
+			model.addAttribute("status", "gagal");
+		}
+		
+		model.addAttribute("nama", nama);
+		return "delete-jabatan";
+	}
 }

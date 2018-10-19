@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.apap.tugas1.repository.JabatanDb;
 import com.apap.tugas1.model.JabatanModel;
+import com.apap.tugas1.model.JabatanPegawaiModel;
 
 /**
  * JabatanServiceImpl
@@ -41,5 +42,17 @@ public class JabatanServiceImpl implements JabatanService {
 		jabatan.setDeskripsi(newJabatan.getDeskripsi());
 		jabatan.setGajiPokok(newJabatan.getGajiPokok());
 		jabatanDb.save(jabatan);
+	}
+	
+	@Override
+	public boolean deleteJabatan(JabatanModel jabatan) {
+		List<JabatanPegawaiModel> listJabatanPegawai = jabatan.getJabatanPegawai();
+		
+		if (listJabatanPegawai.size() != 0) {
+			return false;	// Gagal dihapus
+		} else {
+			jabatanDb.delete(jabatan);
+			return true;	// Berhasil dihapus
+		}
 	}
 }
