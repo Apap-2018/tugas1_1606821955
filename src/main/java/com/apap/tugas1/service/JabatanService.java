@@ -10,4 +10,5 @@ import com.apap.tugas1.model.JabatanModel;
 public interface JabatanService {
 	List<JabatanModel> getAllJabatan();
 	void addJabatan(JabatanModel jabatan);
+	JabatanModel getJabatanModelById(long id);
 }

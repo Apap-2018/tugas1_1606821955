@@ -44,7 +44,11 @@ public class PegawaiController {
 	private InstansiService instansiService;
 	
 	@RequestMapping("/")
-	private String home() {
+	private String home(Model model) {
+		List<JabatanModel> jabatan = jabatanService.getAllJabatan();
+		
+		model.addAttribute("jabatanAll", jabatan);
+		
 		return "home";
 	}
 	

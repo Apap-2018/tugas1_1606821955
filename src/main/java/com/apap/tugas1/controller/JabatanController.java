@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.apap.tugas1.model.JabatanModel;
 import com.apap.tugas1.service.JabatanService;
@@ -32,5 +33,13 @@ public class JabatanController {
 		model.addAttribute("jabatan", jabatan);
 		
 		return "add-jabatan-berhasil";
+	}
+	
+	@RequestMapping(value = "/jabatan/view", method = RequestMethod.GET)
+	public String viewJabatan(@RequestParam("idJabatan") String id, Model model) {
+		JabatanModel jabatan = jabatanService.getJabatanModelById(Long.parseLong(id));
+		
+		model.addAttribute("jabatan", jabatan);
+		return "view-jabatan";
 	}
 }
