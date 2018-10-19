@@ -10,5 +10,5 @@ import com.apap.tugas1.model.JabatanPegawaiModel;
  */
 @Repository
 public interface JabatanPegawaiDb extends JpaRepository<JabatanPegawaiModel, Long> {
-
+	JabatanPegawaiModel findById(long id);
 }

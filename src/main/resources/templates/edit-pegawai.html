@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Ubah Pegawai</title>
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+
+	<div class="container-fluid">
+	<h2>Ubah Pegawai</h2>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="card">
+				<div class="card-header">
+					Form Ubah Pegawai
+				</div>
+				<div class="card-body">
+					<form th:action="@{'/pegawai/ubah?nip=' + ${pegawai.nip}}" th:object="${pegawai}" method="POST">
+						<div hidden>
+							ID: <br>
+							<input type="text" th:field="*{id}" class="form-control" />
+						</div>
+						Nama: <br>
+						<input type="text" th:field="*{nama}" class="form-control" />
+						<br>
+						Tempat Lahir: <br>
+						<input type="text" th:field="*{tempatLahir}" class="form-control" />
+						<br>
+						Tanggal Lahir: <br>
+						<input type="date" th:field="*{tanggalLahir}" class="form-control" />
+						<br>
+						Tahun Masuk: <br>
+						<input type="number" th:field="*{tahunMasuk}" class="form-control" />
+						<br>
+						<div hidden>
+							Provinsi: <br>
+							<div class="form-group blu-margin">
+								<select class="form-control" id="dropProvinsi" name="provinsi">
+									<option value="">--Pilih Provinsi--</option>
+									<option th:each="provinsi : ${provinsiAll}"
+											th:value="${provinsi.id}"
+											th:text="${provinsi.nama}"></option>
+								</select>
+							</div>
+							<br>
+						</div>
+						Nama Instansi: <br>
+						<div class="form-group blu-margin">
+							<select class="form-control" th:field="*{instansi.id}" id="dropInstansi">
+								<option value="0">--Pilih Instansi--</option>
+								<option th:each="instansi : ${instansiAll}"
+										th:value="${instansi.id}"
+										th:text="${instansi.nama} + ' - ' + ${instansi.provinsi.nama}"></option>
+							</select>
+						</div>
+						<br>
+						Jabatan: <br>
+						<div th:each="jabatanPegawai, iterationStatus : *{jabatanPegawai}" class="form-group blu-margin">
+							<select class="form-control" th:field="*{jabatanPegawai[__${iterationStatus.index}__].jabatan.id}" id="dropJabatan">
+								<option value="0">--Pilih Jabatan--</option>
+								<option th:each="jabatan : ${jabatanAll}"
+										th:value="${jabatan.id}"
+										th:text="${jabatan.nama}"></option>
+							</select>
+						</div>
+						<button class="btn btn-primary" type="submit" name="editJabatanPegawai">Tambah Jabatan Lainnya</button>
+						<br><br>
+						<button type="submit" class="btn btn-primary">Simpan</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

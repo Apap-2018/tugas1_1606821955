@@ -10,5 +10,6 @@ import com.apap.tugas1.model.PegawaiModel;
  */
 @Repository
 public interface PegawaiDb extends JpaRepository<PegawaiModel, Long> {
+	PegawaiModel findById(long id);
 	PegawaiModel findByNip(String nip);
 }

@@ -10,8 +10,10 @@ import com.apap.tugas1.model.PegawaiModel;
  */
 public interface PegawaiService {
 	PegawaiModel getPegawaiModelByNip(String nip);
+	PegawaiModel getPegawaiModelById(long id);
 	long hitungGajiPegawai(String nip);
 	void addPegawai(PegawaiModel pegawai);
+	void editPegawai(PegawaiModel newPegawai, long id) throws ParseException;
 	Date getTodayDefaultDate() throws ParseException ;
 	String generateNip(String id_instansi, Date tanggalLahir, String tahunMasuk) throws ParseException;
 	PegawaiModel getPegawaiTermuda(String id_instansi);

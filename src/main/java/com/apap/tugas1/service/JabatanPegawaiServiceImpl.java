@@ -17,7 +17,13 @@ public class JabatanPegawaiServiceImpl implements JabatanPegawaiService {
 	@Autowired
 	private JabatanPegawaiDb jabatanPegawaiDb;
 	
+	@Override
 	public void addJabatanPegawai(JabatanPegawaiModel jabatanPegawai) {
 		jabatanPegawaiDb.save(jabatanPegawai);
+	}
+	
+	@Override
+	public JabatanPegawaiModel getJabatanPegawaiModelById(long id) {
+		return jabatanPegawaiDb.findById(id);
 	}
 }

@@ -12,9 +12,14 @@ import java.util.List;
 
 import com.apap.tugas1.model.PegawaiModel;
 import com.apap.tugas1.model.InstansiModel;
+import com.apap.tugas1.model.JabatanModel;
 import com.apap.tugas1.model.JabatanPegawaiModel;
 import com.apap.tugas1.repository.InstansiDb;
 import com.apap.tugas1.repository.PegawaiDb;
+import com.apap.tugas1.repository.JabatanDb;
+import com.apap.tugas1.repository.JabatanPegawaiDb;
+import com.apap.tugas1.service.InstansiService;
+import com.apap.tugas1.service.JabatanService;
 
 /**
  * PegawaiServiceImpl
@@ -28,9 +33,26 @@ public class PegawaiServiceImpl implements PegawaiService {
 	@Autowired
 	private InstansiDb instansiDb;
 	
+	@Autowired
+	private JabatanDb jabatanDb;
+	
+	@Autowired
+	private JabatanPegawaiDb jabatanPegawaiDb;
+	
+	@Autowired
+	private InstansiService instansiService;
+	
+	@Autowired
+	private JabatanService jabatanService;
+	
 	@Override
 	public PegawaiModel getPegawaiModelByNip(String nip) {
 		return pegawaiDb.findByNip(nip);
+	}
+	
+	@Override
+	public PegawaiModel getPegawaiModelById(long id) {
+		return pegawaiDb.findById(id);
 	}
 	
 	@Override
@@ -56,6 +78,61 @@ public class PegawaiServiceImpl implements PegawaiService {
 	@Override
 	public void addPegawai(PegawaiModel pegawai) {
 		pegawaiDb.save(pegawai);
+	}
+	
+	@Override
+	public void editPegawai(PegawaiModel newPegawai, long id) throws ParseException {
+		PegawaiModel pegawai = pegawaiDb.findById(id);
+		
+		pegawai.setNama(newPegawai.getNama());
+		pegawai.setTempatLahir(newPegawai.getTempatLahir());
+		pegawai.setTanggalLahir(newPegawai.getTanggalLahir());
+		pegawai.setTahunMasuk(newPegawai.getTahunMasuk());
+		
+		instansiService.deletePegawaiInstansi(pegawai, pegawai.getInstansi());
+		instansiDb.save(pegawai.getInstansi());
+		
+		InstansiModel instansi = instansiDb.findById(newPegawai.getInstansi().getId());
+		pegawai.setInstansi(instansi);
+		
+		for (int i = 0; i < newPegawai.getJabatanPegawai().size(); i++) {
+			JabatanModel jabatan = jabatanDb.findById(newPegawai.getJabatanPegawai().get(i).getJabatan().getId());
+			
+			if (i < pegawai.getJabatanPegawai().size()) {
+				JabatanModel jabatanOld = pegawai.getJabatanPegawai().get(i).getJabatan();
+				JabatanPegawaiModel jabatanPegawaiOld = pegawai.getJabatanPegawai().get(i);
+				
+				// Menghapus JabatanPegawaiModel pada JabatanModel
+				jabatanService.deleteJabatanPegawaiModel(jabatanPegawaiOld, jabatanOld);
+				jabatanDb.save(jabatanOld);
+				
+				pegawai.getJabatanPegawai().get(i).setJabatan(jabatan);
+				jabatan.getJabatanPegawai().add(pegawai.getJabatanPegawai().get(i));
+				jabatanDb.save(jabatan);
+				
+			} else {
+				JabatanPegawaiModel jabatanPegawai = new JabatanPegawaiModel();
+				jabatanPegawai.setPegawai(pegawai);
+				jabatanPegawai.setJabatan(jabatan);
+				
+				pegawai.getJabatanPegawai().add(jabatanPegawai);
+				jabatan.getJabatanPegawai().add(jabatanPegawai);
+			}
+		}
+		
+		String nip = this.generateNip(Long.toString(instansi.getId()),
+						pegawai.getTanggalLahir(), pegawai.getTahunMasuk());
+		pegawai.setNip(nip);
+		
+		pegawaiDb.save(pegawai);
+		
+		for (JabatanPegawaiModel jabatanPegawai : pegawai.getJabatanPegawai()) {
+			jabatanPegawaiDb.save(jabatanPegawai);
+			jabatanDb.save(jabatanPegawai.getJabatan());
+		}
+		
+		instansi.getPegawai().add(pegawai);
+		instansiDb.save(instansi);
 	}
 	
 	@Override

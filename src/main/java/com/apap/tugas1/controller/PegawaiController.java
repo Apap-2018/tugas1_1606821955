@@ -129,6 +129,48 @@ public class PegawaiController {
 		return "add-pegawai-berhasil";
 	}
 	
+	@RequestMapping(value = "/pegawai/ubah", method = RequestMethod.GET)
+	public String editPegawai(@RequestParam("nip") String nip, Model model) {
+		PegawaiModel pegawai = pegawaiService.getPegawaiModelByNip(nip);
+		
+		List<ProvinsiModel> provinsi = provinsiService.getAllProvinsi();
+		List<InstansiModel> instansi = instansiService.getAllInstansi(); 
+		List<JabatanModel> jabatan = jabatanService.getAllJabatan();
+		
+		model.addAttribute("pegawai", pegawai);
+		model.addAttribute("provinsiAll", provinsi);
+		model.addAttribute("instansiAll", instansi);
+		model.addAttribute("jabatanAll", jabatan);
+		return "edit-pegawai";
+	}
+	
+	@RequestMapping(value = "/pegawai/ubah", params = {"editJabatanPegawai"})
+	public String editJabatanPegawai(@RequestParam("nip") String nip,
+								@ModelAttribute PegawaiModel pegawai, Model model) {
+		JabatanPegawaiModel jabatanPegawai = new JabatanPegawaiModel();
+		List<ProvinsiModel> provinsi = provinsiService.getAllProvinsi();
+		List<InstansiModel> instansi = instansiService.getAllInstansi(); 
+		List<JabatanModel> jabatan = jabatanService.getAllJabatan();
+		
+		pegawai.getJabatanPegawai().add(jabatanPegawai);
+		model.addAttribute("pegawai", pegawai);
+		model.addAttribute("provinsiAll", provinsi);
+		model.addAttribute("instansiAll", instansi);
+		model.addAttribute("jabatanAll", jabatan);
+		return "edit-pegawai";
+	}
+	
+	@RequestMapping(value = "/pegawai/ubah", method = RequestMethod.POST)
+	public String editPegawaiSubmit(@RequestParam("nip") String nip,
+								@ModelAttribute PegawaiModel pegawai, Model model) throws ParseException {
+		PegawaiModel pegawaiOld = pegawaiService.getPegawaiModelByNip(nip);
+		
+		pegawaiService.editPegawai(pegawai, pegawaiOld.getId());
+		
+		model.addAttribute("pegawai", pegawaiOld);
+		return "edit-pegawai-berhasil";
+	}
+	
 	@RequestMapping(value = "/pegawai/termuda-tertua", method = RequestMethod.GET)
 	public String viewPegawaiTermudaTertua(@RequestParam("idInstansi") String id, Model model) {
 		PegawaiModel pegawaiTermuda = pegawaiService.getPegawaiTermuda(id);

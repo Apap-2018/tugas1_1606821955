@@ -55,4 +55,15 @@ public class JabatanServiceImpl implements JabatanService {
 			return true;	// Berhasil dihapus
 		}
 	}
+	
+	@Override
+	public void deleteJabatanPegawaiModel(JabatanPegawaiModel jabatanPegawai, JabatanModel jabatan) {
+		List<JabatanPegawaiModel> jabatanPegawaiList = jabatan.getJabatanPegawai();
+		
+		for (int i = 0; i < jabatanPegawaiList.size(); i++) {
+			if (jabatanPegawaiList.get(i) == jabatanPegawai) {
+				jabatanPegawaiList.remove(i);
+			}
+		}
+	}
 }
