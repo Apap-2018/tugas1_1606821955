@@ -8,6 +8,10 @@
 	
 	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
 	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+	
+	<style>
+		select option[disabled]{ display:none; }
+	</style>
 </head>
 
 <body>
@@ -35,18 +39,18 @@
 						Tahun Masuk: <br>
 						<input type="number" th:field="*{tahunMasuk}" class="form-control" />
 						<br>
-						<div hidden>
-							Provinsi: <br>
-							<div class="form-group blu-margin">
-								<select class="form-control" id="dropProvinsi" name="provinsi">
-									<option value="">--Pilih Provinsi--</option>
-									<option th:each="provinsi : ${provinsiAll}"
-											th:value="${provinsi.id}"
-											th:text="${provinsi.nama}"></option>
-								</select>
-							</div>
-							<br>
+						<!-- <div hidden>
+						Provinsi: <br>
+						<div class="form-group blu-margin">
+							<select class="form-control" id="dropProvinsi" name="provinsi">
+								<option value="">--Pilih Provinsi--</option>
+								<option th:each="provinsi : ${provinsiAll}"
+										th:value="${provinsi.id}"
+										th:text="${provinsi.nama}"></option>
+							</select>
 						</div>
+						<br>
+						</div> -->
 						Nama Instansi: <br>
 						<div class="form-group blu-margin">
 							<select class="form-control" th:field="*{instansi.id}" id="dropInstansi">
@@ -76,4 +80,15 @@
 	</div>
 	</div>
 </body>
+
+<!-- <script>
+	$('#dropProvinsi').on('click', function() {
+		$('#dropInstansi').children('option').each(function() {
+			if ($(this).attr('provinsiInstansi') !== $('#dropProvinsi').val())
+				$(this).attr('disabled', 'disabled')
+			else $(this).removeAttr('disabled')
+		})
+	})
+	$('#dropProvinsi').trigger('click')
+</script> -->
 </html>
