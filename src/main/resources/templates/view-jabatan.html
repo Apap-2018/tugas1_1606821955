@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Detail Pegawai</title>
+	<title>Detail Jabatan</title>
 	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 	<script th:src="@{/js/bootstrap.min.js}"></script>
 	
@@ -38,7 +38,7 @@
 							</tr>
 						</tbody>
 					</table>
-					<a class="btn btn-primary" th:href="@{#}">Ubah</a>
+					<a class="btn btn-primary" th:href="@{'/jabatan/ubah/?idJabatan=' + ${jabatan.id}}">Ubah</a>
 					<a class="btn btn-primary" th:href="@{#}">Hapus</a>
 				</div>
 			</div>

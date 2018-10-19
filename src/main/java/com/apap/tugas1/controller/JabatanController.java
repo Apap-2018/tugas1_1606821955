@@ -42,4 +42,21 @@ public class JabatanController {
 		model.addAttribute("jabatan", jabatan);
 		return "view-jabatan";
 	}
+	
+	@RequestMapping(value = "/jabatan/ubah", method = RequestMethod.GET)
+	public String editJabatan(@RequestParam("idJabatan") String id, Model model) {
+		JabatanModel jabatan = jabatanService.getJabatanModelById(Long.parseLong(id));
+		
+		model.addAttribute("jabatan", jabatan);
+		return "edit-jabatan";
+	}
+	
+	@RequestMapping(value = "/jabatan/ubah", method = RequestMethod.POST)
+	public String editJabatanPost(@ModelAttribute JabatanModel jabatan, Model model) {
+		jabatanService.editJabatan(jabatan, jabatan.getId());
+		JabatanModel jabatanChange = jabatanService.getJabatanModelById(jabatan.getId());
+		
+		model.addAttribute("jabatan", jabatanChange);
+		return "edit-jabatan-berhasil";
+	}
 }
