@@ -35,32 +35,34 @@
 						Tahun Masuk: <br>
 						<input type="number" th:field="*{tahunMasuk}" class="form-control" />
 						<br>
-						Provinsi: <br>
-						<div class="form-group blu-margin">
-							<select class="form-control" id="dropProvinsi" name="provinsi">
-								<option value="">--Pilih Provinsi--</option>
-								<option th:each="provinsi : ${provinsiAll}"
-										th:value="${provinsi}"
-										th:text="${provinsi.nama}"></option>
-							</select>
+						<div hidden>
+							Provinsi: <br>
+							<div class="form-group blu-margin">
+								<select class="form-control" id="dropProvinsi" name="provinsi">
+									<option value="">--Pilih Provinsi--</option>
+									<option th:each="provinsi : ${provinsiAll}"
+											th:value="${provinsi.id}"
+											th:text="${provinsi.nama}"></option>
+								</select>
+							</div>
+							<br>
 						</div>
-						<br>
 						Nama Instansi: <br>
 						<div class="form-group blu-margin">
-							<select class="form-control" th:field="*{instansi}" id="dropInstansi">
-								<option value="">--Pilih Instansi--</option>
+							<select class="form-control" th:field="*{instansi.id}" id="dropInstansi">
+								<option value="0">--Pilih Instansi--</option>
 								<option th:each="instansi : ${instansiAll}"
-										th:value="${instansi}"
-										th:text="${instansi.nama}"></option>
+										th:value="${instansi.id}"
+										th:text="${instansi.nama} + ' - ' + ${instansi.provinsi.nama}"></option>
 							</select>
 						</div>
 						<br>
 						Jabatan: <br>
 						<div th:each="jabatanPegawai, iterationStatus : *{jabatanPegawai}" class="form-group blu-margin">
-							<select class="form-control" th:field="*{jabatanPegawai[__${iterationStatus.index}__].jabatan}" id="dropJabatan">
-								<option value="">--Pilih Jabatan--</option>
+							<select class="form-control" th:field="*{jabatanPegawai[__${iterationStatus.index}__].jabatan.id}" id="dropJabatan">
+								<option value="0">--Pilih Jabatan--</option>
 								<option th:each="jabatan : ${jabatanAll}"
-										th:value="${jabatan}"
+										th:value="${jabatan.id}"
 										th:text="${jabatan.nama}"></option>
 							</select>
 						</div>

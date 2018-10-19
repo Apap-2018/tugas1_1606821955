@@ -75,6 +75,7 @@ public class PegawaiController {
 		pegawai.setJabatanPegawai(listJabatanPegawai);
 		JabatanPegawaiModel jabatanPegawai = new JabatanPegawaiModel();
 		pegawai.getJabatanPegawai().add(jabatanPegawai);
+		pegawai.setInstansi(new InstansiModel());
 		
 		model.addAttribute("pegawai", pegawai);
 		model.addAttribute("provinsiAll", provinsi);
@@ -103,15 +104,25 @@ public class PegawaiController {
 	public String addPegawaiSubmit(@ModelAttribute PegawaiModel pegawai, Model model) throws ParseException {
 		List<JabatanPegawaiModel> jabatanPegawai = pegawai.getJabatanPegawai();
 		
+		InstansiModel instansi = instansiService.getInstansiModelById(pegawai.getInstansi().getId());
+		pegawai.setInstansi(instansi);
+		
 		for(JabatanPegawaiModel jabatanPeg : jabatanPegawai) {
+			JabatanModel jabatan = jabatanService.getJabatanModelById(jabatanPeg.getJabatan().getId());
 			jabatanPeg.setPegawai(pegawai);
+			jabatanPeg.setJabatan(jabatan);
+		}
+		
+		String nip = pegawaiService.generateNip(Long.toString(pegawai.getInstansi().getId()),
+					pegawai.getTanggalLahir(), pegawai.getTahunMasuk());
+		pegawai.setNip(nip);
+		pegawaiService.addPegawai(pegawai);
+		
+		for(JabatanPegawaiModel jabatanPeg : jabatanPegawai) {
 			jabatanPegawaiService.addJabatanPegawai(jabatanPeg);
 		}
 		
-		pegawai.setNip(pegawaiService.generateNip(Long.toString(pegawai.getInstansi().getId()), pegawai.getTanggalLahir()));
-		pegawaiService.addPegawai(pegawai);
-		
-		instansiService.getInstansiModelById(pegawai.getInstansi().getId()).getPegawai().add(pegawai);
+		instansi.getPegawai().add(pegawai);
 		
 		model.addAttribute("pegawai", pegawai);
 		

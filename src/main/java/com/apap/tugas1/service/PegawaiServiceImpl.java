@@ -75,7 +75,7 @@ public class PegawaiServiceImpl implements PegawaiService {
 	}
 	
 	@Override
-	public String generateNip(String id_instansi, Date tanggalLahir) throws ParseException {
+	public String generateNip(String id_instansi, Date tanggalLahir, String tahunMasuk) throws ParseException {
 		java.text.SimpleDateFormat sdf =
 				new java.text.SimpleDateFormat("dd-MM-yyyy");
 		
@@ -87,8 +87,7 @@ public class PegawaiServiceImpl implements PegawaiService {
 			nip += split;
 		}
 		
-		String tahunSekarang = sdf.format(this.getTodayDefaultDate()).split("-")[2];
-		nip += tahunSekarang;
+		nip += tahunMasuk;
 		
 		for (int i = 1; i < 100; i++) {
 			String nipDummy = nip;
@@ -98,7 +97,7 @@ public class PegawaiServiceImpl implements PegawaiService {
 			
 			nipDummy += i;
 			
-			if (this.getPegawaiModelByNip(nipDummy) != null) {
+			if (this.getPegawaiModelByNip(nipDummy) == null) {
 				nip = nipDummy;
 				return nip;
 			}

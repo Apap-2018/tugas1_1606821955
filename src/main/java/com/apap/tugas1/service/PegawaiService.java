@@ -13,7 +13,7 @@ public interface PegawaiService {
 	long hitungGajiPegawai(String nip);
 	void addPegawai(PegawaiModel pegawai);
 	Date getTodayDefaultDate() throws ParseException ;
-	String generateNip(String id_instansi, Date tanggalLahir) throws ParseException;
+	String generateNip(String id_instansi, Date tanggalLahir, String tahunMasuk) throws ParseException;
 	PegawaiModel getPegawaiTermuda(String id_instansi);
 	PegawaiModel getPegawaiTertua(String id_instansi);
 }
