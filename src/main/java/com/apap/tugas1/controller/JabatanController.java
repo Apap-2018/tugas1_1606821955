@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 import com.apap.tugas1.model.JabatanModel;
 import com.apap.tugas1.service.JabatanService;
 
@@ -75,5 +77,13 @@ public class JabatanController {
 		
 		model.addAttribute("nama", nama);
 		return "delete-jabatan";
+	}
+	
+	@RequestMapping(value = "/jabatan/viewall")
+	public String viewAllJabatan(Model model) {
+		List<JabatanModel> jabatanAll = jabatanService.getAllJabatan();
+		
+		model.addAttribute("jabatanAll", jabatanAll);
+		return "viewall-jabatan";
 	}
 }

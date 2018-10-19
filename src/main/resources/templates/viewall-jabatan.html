@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Home Page</title>
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+
+	<div class="container-fluid">
+	<h2>Daftar Jabatan</h2>
+	<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+				<th>Nama</th>
+				<th>Deskripsi</th>
+				<th>Gaji Pokok</th>
+				<th>Jumlah Pegawai</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="jabatan : ${jabatanAll}">
+					<td th:text="${jabatan.nama}"></td>
+					<td th:text="${jabatan.deskripsi}"></td>
+					<td th:text="${jabatan.gajiPokok}"></td>
+					<td th:text="${#lists.size(jabatan.jabatanPegawai)}"></td>
+				</tr>
+			</tbody>
+	</table>
+	</div>
+</body>
+</html>

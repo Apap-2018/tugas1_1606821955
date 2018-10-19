@@ -38,8 +38,8 @@
 							</tr>
 						</tbody>
 					</table>
-					<a class="btn btn-primary" th:href="@{'/jabatan/ubah/?idJabatan=' + ${jabatan.id}}">Ubah</a>
-					<br><br>
+					<a class="btn btn-primary col-md-2" th:href="@{'/jabatan/ubah/?idJabatan=' + ${jabatan.id}}">Ubah</a>
+					<h5></h5>
 					<form th:action="@{/jabatan/hapus}" th:object="${jabatan}" method="POST">
 						<div hidden>
 							<input type="text" name="id" th:value="${jabatan.id}" class="form-control" />
@@ -47,7 +47,7 @@
 							<input type="text" name="deskripsi" th:value="${jabatan.deskripsi}" class="form-control" />
 							<input type="number" step="0.01" name="gajiPokok" th:value="${jabatan.gajiPokok}" class="form-control" />
 						</div>
-						<button type="submit" class="btn btn-primary">Hapus</button>
+						<button type="submit" class="btn btn-primary col-md-2">Hapus</button>
 					</form>
 				</div>
 			</div>
