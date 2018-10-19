@@ -14,4 +14,6 @@ public interface PegawaiService {
 	void addPegawai(PegawaiModel pegawai);
 	Date getTodayDefaultDate() throws ParseException ;
 	String generateNip(String id_instansi, Date tanggalLahir) throws ParseException;
+	PegawaiModel getPegawaiTermuda(String id_instansi);
+	PegawaiModel getPegawaiTertua(String id_instansi);
 }

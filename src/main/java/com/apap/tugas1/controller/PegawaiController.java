@@ -46,9 +46,10 @@ public class PegawaiController {
 	@RequestMapping("/")
 	private String home(Model model) {
 		List<JabatanModel> jabatan = jabatanService.getAllJabatan();
+		List<InstansiModel> instansi = instansiService.getAllInstansi();
 		
 		model.addAttribute("jabatanAll", jabatan);
-		
+		model.addAttribute("instansiAll", instansi);
 		return "home";
 	}
 	
@@ -115,5 +116,19 @@ public class PegawaiController {
 		model.addAttribute("pegawai", pegawai);
 		
 		return "add-pegawai-berhasil";
+	}
+	
+	@RequestMapping(value = "/pegawai/termuda-tertua", method = RequestMethod.GET)
+	public String viewPegawaiTermudaTertua(@RequestParam("idInstansi") String id, Model model) {
+		PegawaiModel pegawaiTermuda = pegawaiService.getPegawaiTermuda(id);
+		PegawaiModel pegawaiTertua = pegawaiService.getPegawaiTertua(id);
+		long gajiPegawaiTermuda = pegawaiService.hitungGajiPegawai(pegawaiTermuda.getNip());
+		long gajiPegawaiTertua = pegawaiService.hitungGajiPegawai(pegawaiTertua.getNip());
+		
+		model.addAttribute("pegawaiMuda", pegawaiTermuda);
+		model.addAttribute("pegawaiTua", pegawaiTertua);
+		model.addAttribute("gajiPegawaiMuda", gajiPegawaiTermuda);
+		model.addAttribute("gajiPegawaiTua", gajiPegawaiTertua);
+		return "view-pegawai-termuda-tertua";
 	}
 }
