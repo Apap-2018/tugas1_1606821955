@@ -18,6 +18,7 @@ public interface PegawaiService {
 	void editPegawai(PegawaiModel newPegawai, long id) throws ParseException;
 	Date getTodayDefaultDate() throws ParseException ;
 	String generateNip(String id_instansi, Date tanggalLahir, String tahunMasuk) throws ParseException;
+	String generateNip(PegawaiModel pegawai, String id_instansi, Date tanggalLahir, String tahunMasuk) throws ParseException;
 	PegawaiModel getPegawaiTermuda(String id_instansi);
 	PegawaiModel getPegawaiTertua(String id_instansi);
 	List<PegawaiModel> getSelectedPegawai(long idInstansi, long idJabatan);

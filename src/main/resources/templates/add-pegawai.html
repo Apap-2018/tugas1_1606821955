@@ -8,10 +8,7 @@
 	
 	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
 	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
-	
-	<style>
-		select option[disabled]{ display:none; }
-	</style>
+	<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
 </head>
 
 <body>
@@ -39,32 +36,32 @@
 						Tahun Masuk: <br>
 						<input type="number" th:field="*{tahunMasuk}" class="form-control" />
 						<br>
-						<!-- <div hidden>
+						<div>
 						Provinsi: <br>
 						<div class="form-group blu-margin">
 							<select class="form-control" id="dropProvinsi" name="provinsi">
-								<option value="">--Pilih Provinsi--</option>
+								<option value=0>--Pilih Provinsi--</option>
 								<option th:each="provinsi : ${provinsiAll}"
 										th:value="${provinsi.id}"
 										th:text="${provinsi.nama}"></option>
 							</select>
 						</div>
 						<br>
-						</div> -->
+						</div>
 						Nama Instansi: <br>
 						<div class="form-group blu-margin">
 							<select class="form-control" th:field="*{instansi.id}" id="dropInstansi">
-								<option value="0">--Pilih Instansi--</option>
-								<option th:each="instansi : ${instansiAll}"
+								<option value=0>--Pilih Instansi--</option>
+								<!-- <option th:each="instansi : ${instansiAll}"
 										th:value="${instansi.id}"
-										th:text="${instansi.nama} + ' - ' + ${instansi.provinsi.nama}"></option>
+										th:text="${instansi.nama} + ' - ' + ${instansi.provinsi.nama}"></option> -->
 							</select>
 						</div>
 						<br>
 						Jabatan: <br>
 						<div th:each="jabatanPegawai, iterationStatus : *{jabatanPegawai}" class="form-group blu-margin">
 							<select class="form-control" th:field="*{jabatanPegawai[__${iterationStatus.index}__].jabatan.id}" id="dropJabatan">
-								<option value="0">--Pilih Jabatan--</option>
+								<option value=0>--Pilih Jabatan--</option>
 								<option th:each="jabatan : ${jabatanAll}"
 										th:value="${jabatan.id}"
 										th:text="${jabatan.nama}"></option>
@@ -81,14 +78,20 @@
 	</div>
 </body>
 
-<!-- <script>
-	$('#dropProvinsi').on('click', function() {
-		$('#dropInstansi').children('option').each(function() {
-			if ($(this).attr('provinsiInstansi') !== $('#dropProvinsi').val())
-				$(this).attr('disabled', 'disabled')
-			else $(this).removeAttr('disabled')
-		})
-	})
-	$('#dropProvinsi').trigger('click')
-</script> -->
+<script th:inline="javascript">
+	$('#dropProvinsi').change(
+			function(){
+				$.getJSON("http://localhost:8080/instansi/get", {
+					idProvinsi: $(this).val(),
+					ajax: 'true'
+				}, function(data) {
+					html = '<option value="0">--Pilih Instansi--</option>';
+					for (var i = 0; i < data.length; i++){
+						html += '<option value="' + data[i].id + '">' + data[i].nama + '</option>';
+					}
+					$('#dropInstansi').html(html);
+				});
+			});
+</script>
+
 </html>

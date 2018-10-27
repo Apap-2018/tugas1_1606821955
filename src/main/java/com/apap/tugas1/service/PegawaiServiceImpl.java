@@ -121,7 +121,7 @@ public class PegawaiServiceImpl implements PegawaiService {
 			}
 		}
 		
-		String nip = this.generateNip(Long.toString(instansi.getId()),
+		String nip = this.generateNip(pegawai, Long.toString(instansi.getId()),
 						pegawai.getTanggalLahir(), pegawai.getTahunMasuk());
 		pegawai.setNip(nip);
 		
@@ -176,6 +176,39 @@ public class PegawaiServiceImpl implements PegawaiService {
 			nipDummy += i;
 			
 			if (this.getPegawaiModelByNip(nipDummy) == null) {
+				nip = nipDummy;
+				return nip;
+			}
+		}
+		
+		return null;
+	}
+	
+	@Override
+	public String generateNip(PegawaiModel pegawai, String id_instansi, Date tanggalLahir, String tahunMasuk) throws ParseException {
+		java.text.SimpleDateFormat sdf =
+				new java.text.SimpleDateFormat("dd-MM-yyyy");
+		
+		String tanggalLahir2 = sdf.format(tanggalLahir);
+		String[] tanggalLahirSplit = tanggalLahir2.split("-");
+		
+		String nip = id_instansi;
+		for (String split : tanggalLahirSplit) {
+			nip += split;
+		}
+		
+		nip += tahunMasuk;
+		
+		for (int i = 1; i < 100; i++) {
+			String nipDummy = nip;
+			if (i < 10) {
+				nipDummy += 0;
+			}
+			
+			nipDummy += i;
+			
+			PegawaiModel pegawaiSelected = this.getPegawaiModelByNip(nipDummy);
+			if ((pegawaiSelected == null) || (pegawaiSelected == pegawai)) {
 				nip = nipDummy;
 				return nip;
 			}
