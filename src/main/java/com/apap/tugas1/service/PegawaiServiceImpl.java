@@ -361,9 +361,12 @@ public class PegawaiServiceImpl implements PegawaiService {
 				}
 			}
 		} else if (jabatan != null) {
+			
 			for (JabatanPegawaiModel jabatanPegawai : jabatan.getJabatanPegawai()) {
 				pegawaiList.add(jabatanPegawai.getPegawai());
 			}
+		} else {
+			pegawaiList = pegawaiDb.findAll();
 		}
 		
 		return pegawaiList;
