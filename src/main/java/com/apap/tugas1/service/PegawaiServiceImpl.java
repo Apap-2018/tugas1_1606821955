@@ -15,10 +15,12 @@ import com.apap.tugas1.model.PegawaiModel;
 import com.apap.tugas1.model.InstansiModel;
 import com.apap.tugas1.model.JabatanModel;
 import com.apap.tugas1.model.JabatanPegawaiModel;
+import com.apap.tugas1.model.ProvinsiModel;
 import com.apap.tugas1.repository.InstansiDb;
 import com.apap.tugas1.repository.PegawaiDb;
 import com.apap.tugas1.repository.JabatanDb;
 import com.apap.tugas1.repository.JabatanPegawaiDb;
+import com.apap.tugas1.repository.ProvinsiDb;
 import com.apap.tugas1.service.InstansiService;
 import com.apap.tugas1.service.JabatanService;
 
@@ -39,6 +41,9 @@ public class PegawaiServiceImpl implements PegawaiService {
 	
 	@Autowired
 	private JabatanPegawaiDb jabatanPegawaiDb;
+	
+	@Autowired
+	private ProvinsiDb provinsiDb;
 	
 	@Autowired
 	private InstansiService instansiService;
@@ -309,16 +314,55 @@ public class PegawaiServiceImpl implements PegawaiService {
 	}
 	
 	@Override
-	public List<PegawaiModel> getSelectedPegawai(long idInstansi, long idJabatan){
+	public List<PegawaiModel> getSelectedPegawai(long idProvinsi, long idInstansi, long idJabatan){
+		ProvinsiModel provinsi = provinsiDb.findById(idProvinsi);
 		InstansiModel instansi = instansiDb.findById(idInstansi);
+		JabatanModel jabatan = jabatanDb.findById(idJabatan);
 		List<PegawaiModel> pegawaiList = new ArrayList<>();
 		
-		for (PegawaiModel pegawai : instansi.getPegawai()) {
-			for (JabatanPegawaiModel jabatanPegawai : pegawai.getJabatanPegawai()) {
-				if (jabatanPegawai.getJabatan().getId() == idJabatan) {
-					pegawaiList.add(pegawai);
-					continue;
+		if (provinsi != null) {
+			
+			if (instansi != null) {
+				
+				if (jabatan != null) {
+					
+					for (PegawaiModel pegawai : instansi.getPegawai()) {
+						for (JabatanPegawaiModel jabatanPegawai : pegawai.getJabatanPegawai()) {
+							if (jabatanPegawai.getJabatan().getId() == idJabatan) {
+								pegawaiList.add(pegawai);
+								break;
+							}
+						}
+					}
+				} else {
+					
+					for (PegawaiModel pegawai : instansi.getPegawai()) {
+						pegawaiList.add(pegawai);
+					}
 				}
+			} else if (jabatan != null) {
+				
+				for (InstansiModel instansiSelected : provinsi.getInstansi()) {
+					for (PegawaiModel pegawai : instansiSelected.getPegawai()) {
+						for (JabatanPegawaiModel jabatanPegawai : pegawai.getJabatanPegawai()) {
+							if (jabatanPegawai.getJabatan().getId() == idJabatan) {
+								pegawaiList.add(pegawai);
+								break;
+							}
+						}
+					}
+				}
+			} else {
+				
+				for (InstansiModel instansiSelected : provinsi.getInstansi()) {
+					for (PegawaiModel pegawai : instansiSelected.getPegawai()) {
+						pegawaiList.add(pegawai);
+					}
+				}
+			}
+		} else if (jabatan != null) {
+			for (JabatanPegawaiModel jabatanPegawai : jabatan.getJabatanPegawai()) {
+				pegawaiList.add(jabatanPegawai.getPegawai());
 			}
 		}
 		

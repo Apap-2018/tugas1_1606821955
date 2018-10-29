@@ -207,7 +207,8 @@ public class PegawaiController {
 		List<JabatanModel> jabatan = jabatanService.getAllJabatan();
 		List<InstansiModel> instansiSelected = new ArrayList<>();
 		
-		List<PegawaiModel> pegawaiSelected = pegawaiService.getSelectedPegawai(Long.parseLong(idInstansi),
+		List<PegawaiModel> pegawaiSelected = pegawaiService.getSelectedPegawai(Long.parseLong(idProvinsi),
+											Long.parseLong(idInstansi),
 											Long.parseLong(idJabatan));
 		
 		model.addAttribute("provinsiAll", provinsi);

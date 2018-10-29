@@ -34,7 +34,7 @@
 				<tr th:each="jabatan : ${jabatanAll}">
 					<td th:text="${jabatan.nama}"></td>
 					<td th:text="${jabatan.deskripsi}"></td>
-					<td style="text-align: center" th:text="${jabatan.gajiPokok}"></td>
+					<td style="text-align: center" th:text="'Rp' + ${jabatan.gajiPokok}"></td>
 					<td style="text-align: center" th:text="${#lists.size(jabatan.jabatanPegawai)}"></td>
 				</tr>
 			</tbody>

@@ -33,7 +33,7 @@
 						<div class="form-group blu-margin">
 							<p class="card-text">Provinsi</p>
 							<select class="form-control" id="dropProvinsi" name="idProvinsi">
-								<option disabled="disabled" selected="selected" value=0>--Pilih Provinsi--</option>
+								<option th:value=0>--Pilih Provinsi--</option>
 								<option th:each="provinsi : ${provinsiAll}"
 										th:value="${provinsi.id}"
 										th:text="${provinsi.nama}"></option>
@@ -41,12 +41,12 @@
 							<br>
 							<p class="card-text">Instansi</p>
 							<select class="form-control" id="dropInstansi" name="idInstansi">
-								<option disabled="disabled" selected="selected" value=0>--Pilih Instansi--</option>
+								<option th:value=0>--Pilih Instansi--</option>
 							</select>
 							<br>
 							<p class="card-text">Jabatan</p>
 							<select class="form-control" id="dropJabatan" name="idJabatan">
-								<option disabled="disabled" selected="selected" value=0>--Pilih Jabatan--</option>
+								<option th:value=0>--Pilih Jabatan--</option>
 								<option th:each="jabatan : ${jabatanAll}"
 										th:value="${jabatan.id}"
 										th:text="${jabatan.nama}"></option>
@@ -99,7 +99,7 @@
 					idProvinsi: $(this).val(),
 					ajax: 'true'
 				}, function(data) {
-					html = '<option disabled="disabled" selected="selected" value=0>--Pilih Instansi--</option>';
+					html = '<option value=0>--Pilih Instansi--</option>';
 					for (var i = 0; i < data.length; i++){
 						html += '<option value="' + data[i].id + '">' + data[i].nama + '</option>';
 					}

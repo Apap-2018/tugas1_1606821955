@@ -21,5 +21,5 @@ public interface PegawaiService {
 	String generateNip(PegawaiModel pegawai, String id_instansi, Date tanggalLahir, String tahunMasuk) throws ParseException;
 	PegawaiModel getPegawaiTermuda(String id_instansi);
 	PegawaiModel getPegawaiTertua(String id_instansi);
-	List<PegawaiModel> getSelectedPegawai(long idInstansi, long idJabatan);
+	List<PegawaiModel> getSelectedPegawai(long idProvinsi, long idInstansi, long idJabatan);
 }
