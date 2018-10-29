@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Detail Pegawai</title>
+	<title>Tambah Pegawai</title>
 	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 	<script th:src="@{/js/bootstrap.min.js}"></script>
 	
@@ -36,10 +36,9 @@
 						Tahun Masuk: <br>
 						<input type="number" th:field="*{tahunMasuk}" class="form-control" />
 						<br>
-						<div>
 						Provinsi: <br>
 						<div class="form-group blu-margin">
-							<select class="form-control" id="dropProvinsi" name="provinsi">
+							<select class="form-control" th:field="*{instansi.provinsi.id}" id="dropProvinsi">
 								<option value=0>--Pilih Provinsi--</option>
 								<option th:each="provinsi : ${provinsiAll}"
 										th:value="${provinsi.id}"
@@ -47,14 +46,13 @@
 							</select>
 						</div>
 						<br>
-						</div>
 						Nama Instansi: <br>
 						<div class="form-group blu-margin">
 							<select class="form-control" th:field="*{instansi.id}" id="dropInstansi">
 								<option value=0>--Pilih Instansi--</option>
-								<!-- <option th:each="instansi : ${instansiAll}"
+								<option th:each="instansi : ${instansiSelected}"
 										th:value="${instansi.id}"
-										th:text="${instansi.nama} + ' - ' + ${instansi.provinsi.nama}"></option> -->
+										th:text="${instansi.nama}"></option>
 							</select>
 						</div>
 						<br>

@@ -66,8 +66,8 @@ public class PegawaiController {
 	@RequestMapping(value = "/pegawai/tambah", method = RequestMethod.GET)
 	public String addPegawai(Model model) throws ParseException {
 		List<ProvinsiModel> provinsi = provinsiService.getAllProvinsi();
-		List<InstansiModel> instansi = instansiService.getAllInstansi(); 
 		List<JabatanModel> jabatan = jabatanService.getAllJabatan();
+		List<InstansiModel> instansiSelected = new ArrayList<>();
 		
 		PegawaiModel pegawai = new PegawaiModel();
 		pegawai.setTanggalLahir(pegawaiService.getTodayDefaultDate());
@@ -79,7 +79,7 @@ public class PegawaiController {
 		
 		model.addAttribute("pegawai", pegawai);
 		model.addAttribute("provinsiAll", provinsi);
-		model.addAttribute("instansiAll", instansi);
+		model.addAttribute("instansiSelected", instansiSelected);
 		model.addAttribute("jabatanAll", jabatan);
 		return "add-pegawai";
 	}
@@ -88,13 +88,18 @@ public class PegawaiController {
 	public String addJabatanPegawai(@ModelAttribute PegawaiModel pegawai, Model model) {
 		JabatanPegawaiModel jabatanPegawai = new JabatanPegawaiModel();
 		List<ProvinsiModel> provinsi = provinsiService.getAllProvinsi();
-		List<InstansiModel> instansi = instansiService.getAllInstansi(); 
 		List<JabatanModel> jabatan = jabatanService.getAllJabatan();
+		
+		ProvinsiModel provinsiSelected = provinsiService.getProvinsiModelById(pegawai.getInstansi().getProvinsi().getId());
+		List<InstansiModel> instansiSelected = new ArrayList<>();
+		if (provinsiSelected != null) { 
+			instansiSelected = provinsiSelected.getInstansi();
+		}
 		
 		pegawai.getJabatanPegawai().add(jabatanPegawai);
 		model.addAttribute("pegawai", pegawai);
 		model.addAttribute("provinsiAll", provinsi);
-		model.addAttribute("instansiAll", instansi);
+		model.addAttribute("instansiSelected", instansiSelected);
 		model.addAttribute("jabatanAll", jabatan);
 		return "add-pegawai";
 	}

@@ -39,18 +39,16 @@
 						Tahun Masuk: <br>
 						<input type="number" th:field="*{tahunMasuk}" class="form-control" />
 						<br>
-						<div hidden>
-							Provinsi: <br>
-							<div class="form-group blu-margin">
-								<select class="form-control" id="dropProvinsi" name="provinsi">
-									<option value="">--Pilih Provinsi--</option>
-									<option th:each="provinsi : ${provinsiAll}"
-											th:value="${provinsi.id}"
-											th:text="${provinsi.nama}"></option>
-								</select>
-							</div>
-							<br>
+						Provinsi: <br>
+						<div class="form-group blu-margin">
+							<select class="form-control" th:value="*{instansi.provinsi.id}" id="dropProvinsi" name="provinsi">
+								<option value="">--Pilih Provinsi--</option>
+								<option th:each="provinsi : ${provinsiAll}"
+										th:value="${provinsi.id}"
+										th:text="${provinsi.nama}"></option>
+							</select>
 						</div>
+						<br>
 						Nama Instansi: <br>
 						<div class="form-group blu-margin">
 							<select class="form-control" th:field="*{instansi.id}" id="dropInstansi">
