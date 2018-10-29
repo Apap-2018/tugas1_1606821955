@@ -139,12 +139,14 @@ public class PegawaiController {
 		PegawaiModel pegawai = pegawaiService.getPegawaiModelByNip(nip);
 		
 		List<ProvinsiModel> provinsi = provinsiService.getAllProvinsi();
-		List<InstansiModel> instansi = instansiService.getAllInstansi(); 
 		List<JabatanModel> jabatan = jabatanService.getAllJabatan();
+		
+		ProvinsiModel provinsiSelected = pegawai.getInstansi().getProvinsi();
+		List<InstansiModel> instansiSelected = provinsiSelected.getInstansi();
 		
 		model.addAttribute("pegawai", pegawai);
 		model.addAttribute("provinsiAll", provinsi);
-		model.addAttribute("instansiAll", instansi);
+		model.addAttribute("instansiSelected", instansiSelected);
 		model.addAttribute("jabatanAll", jabatan);
 		return "edit-pegawai";
 	}
@@ -152,15 +154,21 @@ public class PegawaiController {
 	@RequestMapping(value = "/pegawai/ubah", params = {"editJabatanPegawai"})
 	public String editJabatanPegawai(@RequestParam("nip") String nip,
 								@ModelAttribute PegawaiModel pegawai, Model model) {
-		JabatanPegawaiModel jabatanPegawai = new JabatanPegawaiModel();
-		List<ProvinsiModel> provinsi = provinsiService.getAllProvinsi();
-		List<InstansiModel> instansi = instansiService.getAllInstansi(); 
+		List<ProvinsiModel> provinsi = provinsiService.getAllProvinsi(); 
 		List<JabatanModel> jabatan = jabatanService.getAllJabatan();
 		
+		JabatanPegawaiModel jabatanPegawai = new JabatanPegawaiModel();
 		pegawai.getJabatanPegawai().add(jabatanPegawai);
+		
+		ProvinsiModel provinsiSelected = provinsiService.getProvinsiModelById(pegawai.getInstansi().getProvinsi().getId());
+		List<InstansiModel> instansiSelected = new ArrayList<>();
+		if (provinsiSelected != null) { 
+			instansiSelected = provinsiSelected.getInstansi();
+		}
+		
 		model.addAttribute("pegawai", pegawai);
 		model.addAttribute("provinsiAll", provinsi);
-		model.addAttribute("instansiAll", instansi);
+		model.addAttribute("instansiSelected", instansiSelected);
 		model.addAttribute("jabatanAll", jabatan);
 		return "edit-pegawai";
 	}
