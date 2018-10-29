@@ -36,6 +36,10 @@
 								<th>Gaji Pokok</th>
 								<td th:text="${jabatan.gajiPokok}"></td>
 							</tr>
+							<tr>
+								<th>Jumlah Pegawai</th>
+								<td th:text="${#lists.size(jabatan.jabatanPegawai)}"></td>
+							</tr>
 						</tbody>
 					</table>
 					<a class="btn btn-primary col-md-2" th:href="@{'/jabatan/ubah/?idJabatan=' + ${jabatan.id}}">Ubah</a>
