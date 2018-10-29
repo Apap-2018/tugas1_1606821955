@@ -162,7 +162,11 @@ public class PegawaiServiceImpl implements PegawaiService {
 		
 		String nip = id_instansi;
 		for (String split : tanggalLahirSplit) {
-			nip += split;
+			if (split.length() != 4) {
+				nip += split;
+			} else {
+				nip += split.substring(2, 4);
+			}
 		}
 		
 		nip += tahunMasuk;
@@ -194,7 +198,11 @@ public class PegawaiServiceImpl implements PegawaiService {
 		
 		String nip = id_instansi;
 		for (String split : tanggalLahirSplit) {
-			nip += split;
+			if (split.length() != 4) {
+				nip += split;
+			} else {
+				nip += split.substring(2, 4);
+			}
 		}
 		
 		nip += tahunMasuk;
