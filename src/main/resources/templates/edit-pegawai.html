@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<nav th:replace="fragments/fragment :: navbar(pageNumber=5)"></nav>
 
 	<div class="container-fluid">
 	<h2>Ubah Pegawai</h2>
@@ -29,21 +29,21 @@
 							<input type="text" th:field="*{id}" class="form-control" />
 						</div>
 						Nama: <br>
-						<input type="text" th:field="*{nama}" class="form-control" />
+						<input type="text" th:field="*{nama}" class="form-control" required="required" />
 						<br>
 						Tempat Lahir: <br>
-						<input type="text" th:field="*{tempatLahir}" class="form-control" />
+						<input type="text" th:field="*{tempatLahir}" class="form-control" required="required" />
 						<br>
 						Tanggal Lahir: <br>
-						<input type="date" th:field="*{tanggalLahir}" class="form-control" />
+						<input type="date" th:field="*{tanggalLahir}" class="form-control" required="required" />
 						<br>
 						Tahun Masuk: <br>
-						<input type="number" th:field="*{tahunMasuk}" class="form-control" />
+						<input type="number" th:field="*{tahunMasuk}" class="form-control" required="required" />
 						<br>
 						Provinsi: <br>
 						<div class="form-group blu-margin">
-							<select class="form-control" th:field="*{instansi.provinsi.id}" id="dropProvinsi">
-								<option value=0>--Pilih Provinsi--</option>
+							<select class="form-control" th:field="*{instansi.provinsi.id}" id="dropProvinsi" required="required">
+								<option disabled="disabled" value=0>--Pilih Provinsi--</option>
 								<option th:each="provinsi : ${provinsiAll}"
 										th:value="${provinsi.id}"
 										th:text="${provinsi.nama}"></option>
@@ -52,8 +52,8 @@
 						<br>
 						Nama Instansi: <br>
 						<div class="form-group blu-margin">
-							<select class="form-control" th:field="*{instansi.id}" id="dropInstansi">
-								<option value=0>--Pilih Instansi--</option>
+							<select class="form-control" th:field="*{instansi.id}" id="dropInstansi" required="required">
+								<option disabled="disabled" value=0>--Pilih Instansi--</option>
 								<option th:each="instansi : ${instansiSelected}"
 										th:value="${instansi.id}"
 										th:text="${instansi.nama}"></option>
@@ -62,8 +62,8 @@
 						<br>
 						Jabatan: <br>
 						<div th:each="jabatanPegawai, iterationStatus : *{jabatanPegawai}" class="form-group blu-margin">
-							<select class="form-control" th:field="*{jabatanPegawai[__${iterationStatus.index}__].jabatan.id}" id="dropJabatan">
-								<option value=0>--Pilih Jabatan--</option>
+							<select class="form-control" th:field="*{jabatanPegawai[__${iterationStatus.index}__].jabatan.id}" id="dropJabatan" required="required">
+								<option disabled="disabled" value=0>--Pilih Jabatan--</option>
 								<option th:each="jabatan : ${jabatanAll}"
 										th:value="${jabatan.id}"
 										th:text="${jabatan.nama}"></option>
@@ -88,7 +88,7 @@
 					idProvinsi: $(this).val(),
 					ajax: 'true'
 				}, function(data) {
-					html = '<option value=0>--Pilih Instansi--</option>';
+					html = '<option disabled="disabled" selected="selected" value=0>--Pilih Instansi--</option>';
 					for (var i = 0; i < data.length; i++){
 						html += '<option value="' + data[i].id + '">' + data[i].nama + '</option>';
 					}

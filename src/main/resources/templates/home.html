@@ -11,7 +11,7 @@
 </head>
 
 <body>
-	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<nav th:replace="fragments/fragment :: navbar(pageNumber=0)"></nav>
 
 	<div class="container-fluid">
 	<h2>Sistem Informasi Kepegawaian</h2>
@@ -25,7 +25,7 @@
 				<form th:action="@{/pegawai}" method="GET">
 					<div class="card-body">
 						<p class="card-text">Masukan Nomor Induk Pegawai</p>
-						<input type="text" name="nip" class="form-control" />
+						<input type="text" name="nip" class="form-control" required="required" />
 						<p></p>
 						<button type="submit" class="btn btn-primary">Lihat</button>
 					</div>
@@ -44,8 +44,8 @@
 					<div class="card-body">
 						<p class="card-text">Pilih Jabatan</p>
 						<div class="form-group blu-margin">
-							<select class="form-control" id="dropJabatan" name="idJabatan">
-								<option value="">--Pilih Jabatan--</option>
+							<select class="form-control" id="dropJabatan" name="idJabatan" required="required">
+								<option disabled="disabled" selected="selected" value="">--Pilih Jabatan--</option>
 								<option th:each="jabatan : ${jabatanAll}"
 										th:value="${jabatan.id}"
 										th:text="${jabatan.nama}"></option>
@@ -68,8 +68,8 @@
 					<div class="card-body">
 						<p class="card-text">Pilih Instansi</p>
 						<div class="form-group blu-margin">
-							<select class="form-control" id="dropInstansi" name="idInstansi">
-								<option value="">--Pilih Instansi--</option>
+							<select class="form-control" id="dropInstansi" name="idInstansi" required="required">
+								<option disabled="disabled" selected="selected" value="">--Pilih Instansi--</option>
 								<option th:each="instansi : ${instansiAll}"
 										th:value="${instansi.id}"
 										th:text="${instansi.nama} + ' - ' + ${instansi.provinsi.nama}"></option>
